@@ -22,4 +22,5 @@ PS C:\raphael\26-Aug-2025\monoclient\apps> Remove-Item -Recurse -Force docs, web
 
 ````
 npx create-next-app@latest todo-web --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+npx create-next-app@latest profile --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
 ````
