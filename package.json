@@ -3,9 +3,13 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:todo": "turbo build --filter=todo-*",
     "dev": "turbo run dev",
+    "dev:todo": "turbo dev --filter=todo-web",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint:fix": "turbo lint:fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "test": "turbo test",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {

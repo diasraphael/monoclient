@@ -3,6 +3,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
+import importPlugin from "eslint-plugin-import";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -16,9 +17,33 @@ export const config = [
   {
     plugins: {
       turbo: turboPlugin,
+      import: importPlugin,
     },
     rules: {
       "turbo/no-undeclared-env-vars": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
+          "newlines-between": "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
   {
@@ -27,6 +52,6 @@ export const config = [
     },
   },
   {
-    ignores: ["dist/**"],
+    ignores: ["node_modules/**", "dist/**", ".next/**", "out/**"],
   },
 ];

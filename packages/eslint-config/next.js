@@ -3,6 +3,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import tseslint from "typescript-eslint";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
+import pluginJsxA11y from "eslint-plugin-jsx-a11y";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
 import { config as baseConfig } from "./base.js";
@@ -22,9 +23,15 @@ export const nextJsConfig = [
     languageOptions: {
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
+        ...globals.browser,
+        ...globals.es2022,
+        ...globals.node,
         ...globals.serviceworker,
       },
     },
+  },
+  {
+    ...pluginJsxA11y.flatConfigs.recommended,
   },
   {
     plugins: {
@@ -44,6 +51,10 @@ export const nextJsConfig = [
       ...pluginReactHooks.configs.recommended.rules,
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+      // Using TypeScript for prop validation
+      "react/prop-types": "off",
+      // Next.js Link component handles this
+      "jsx-a11y/anchor-is-valid": "off",
     },
   },
 ];
