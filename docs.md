@@ -25,3 +25,43 @@ npx create-next-app@latest profile --typescript --tailwind --eslint --app --src-
 npx create-next-app@latest bible-web --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
 npx create-next-app@latest shopify-web --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
 ```
+
+### install dependencies(google up)
+
+# Go to root directory
+
+cd /path/to/monoclient
+
+# Install ESLint config package dependencies
+
+pnpm install --filter=@repo/eslint-config
+
+# Install ESLint and Prettier in root and all packages
+
+pnpm add -D eslint prettier @repo/eslint-config
+
+# Install in all apps
+
+pnpm add -D eslint --filter="todo-web"
+pnpm add -D eslint --filter="ecommerce-web"
+pnpm add -D eslint --filter="profile-web"
+
+# Install in all packages
+
+pnpm add -D eslint --filter="@repo/ui"
+pnpm add -D eslint --filter="@repo/todo-ui"
+pnpm add -D eslint --filter="@repo/ecommerce-ui"
+pnpm add -D eslint --filter="@repo/profile-ui"
+
+# Lint only todo-related packages
+
+pnpm lint --filter=todo-\*
+
+# Format only one app
+
+pnpm format --filter=todo-web
+
+# Files Covered:
+
+Code files: _.js, _.jsx, _.ts, _.tsx → ESLint + Prettier
+Other files: _.json, _.css, \*.md → Prettier only

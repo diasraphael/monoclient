@@ -50,6 +50,7 @@ import { Button } from '@repo/ui';
 
 export default function Home() {
 return (
+
 <main className="p-8">
 <h1 className="text-2xl font-bold mb-4">Todo App</h1>
 <Button onClick={() => alert('Hello from shared component!')}>

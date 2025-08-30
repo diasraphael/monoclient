@@ -8,7 +8,7 @@ const eslintConfig = [
   {
     files: ["*.js", "*.ts", "*.tsx"],
     rules: {
-      "turbo/gen": "error",
+      // Turbo-specific rules can be added here when available
     },
   },
 ];
