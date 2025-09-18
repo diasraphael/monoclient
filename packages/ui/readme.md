@@ -1,70 +1,104 @@
-## Create Your First Shared Component
+# @repo/ui - Shadcn Component Library
 
-Let's add a simple shared component to test the setup:
+A shared component library for the monoclient monorepo, built with shadcn/ui components and Tailwind CSS v4.
 
-## Create a Button component in the ui package
+## 📦 What's Included
 
-cd packages/ui/src
+- **shadcn/ui components**: Button, Card, Input, and more
+- **Original components**: Your existing Button, Card, Code components
+- **Tailwind CSS v4** integration
+- **TypeScript** support
+- **Class variance authority** for component variants
 
-## Create the Button component
+## 🚀 Usage in Apps
 
-mkdir -p components
-Create packages/ui/src/components/Button.tsx:
+### 1. Import the CSS (required)
 
+In your app's `globals.css` or main CSS file:
+
+```css
+@import "@repo/ui/globals.css";
 ```
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: 'primary' | 'secondary';
-}
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  variant = 'primary'
-}) => {
-  const baseClasses = 'px-4 py-2 rounded font-medium transition-colors';
-  const variantClasses = variant === 'primary'
-    ? 'bg-blue-600 text-white hover:bg-blue-700'
-    : 'bg-gray-200 text-gray-800 hover:bg-gray-300';
+### 2. Import Components
 
+```tsx
+import { Button, Card, Input, cn } from "@repo/ui/components";
+
+export default function MyPage() {
   return (
-    <button
-      onClick={onClick}
-      className={`${baseClasses} ${variantClasses}`}
-    >
-      {children}
-    </button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Welcome</CardTitle>
+        <CardDescription>This uses shadcn components!</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Input placeholder="Enter your name" />
+        <Button className={cn("mt-4")}>Submit</Button>
+      </CardContent>
+    </Card>
   );
-};
+}
 ```
 
-Update packages/ui/src/index.tsx:
+### 3. Tailwind Configuration
 
-export { Button } from './components/Button';
+Your apps should extend the UI package's Tailwind config:
 
-## Use the Shared Component
+```ts
+// tailwind.config.ts
+import baseConfig from "@repo/ui/tailwind.config";
+import type { Config } from "tailwindcss";
 
-In apps/todo-web/src/app/page.tsx, import and use your shared component:
-import { Button } from '@repo/ui';
+const config: Config = {
+  ...baseConfig,
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}", // Include UI components
+  ],
+};
 
-export default function Home() {
-return (
+export default config;
+```
 
-<main className="p-8">
-<h1 className="text-2xl font-bold mb-4">Todo App</h1>
-<Button onClick={() => alert('Hello from shared component!')}>
-Add Todo
-</Button>
-</main>
-);
-}
+## 🎨 Available Components
 
-bash# Build the ui package first
-pnpm build --filter=@repo/ui
+### Shadcn Components
 
-# Start development
+- `Button` - Multiple variants (default, destructive, outline, secondary, ghost, link)
+- `Card` - Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
+- `Input` - Form input with consistent styling
 
-pnpm dev:todo
+### Original Components
 
-# Visit http://localhost:3000 and click the button!
+- `OriginalButton` - Your existing button component
+- `OriginalCard` - Your existing card component
+- `Code` - Code display component
+
+### Utilities
+
+- `cn` - Class name utility for merging Tailwind classes
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Type check
+pnpm run check-types
+
+# Lint
+pnpm run lint
+```
+
+## 🎯 Adding New Components
+
+Use the shadcn CLI from the UI package directory:
+
+```bash
+cd packages/ui
+pnpm dlx shadcn@latest add [component-name]
+```
+
+Then export the component in `src/components/index.ts`.

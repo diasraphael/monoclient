@@ -65,3 +65,9 @@ pnpm format --filter=todo-web
 
 Code files: _.js, _.jsx, _.ts, _.tsx → ESLint + Prettier
 Other files: _.json, _.css, \*.md → Prettier only
+
+## Setup
+
+1. Setup modern ESLint config, Prettier, and git hooks
+2. editorconfig for the repo
+3. Turbo repo setup
