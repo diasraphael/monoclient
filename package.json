@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "build:todo": "turbo build --filter=todo-*",
+    "build:shepherd": "turbo build --filter=good-shepherd",
     "dev": "turbo run dev",
-    "dev:todo": "turbo dev --filter=todo-web",
+    "dev:shepherd": "turbo dev --filter=good-shepherd",
     "lint": "turbo run lint",
     "lint:fix": "turbo lint:fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
