@@ -33,21 +33,22 @@ function Footer() {
     <footer className="border-t border-gray-200 bg-gray-50 py-12 dark:border-gray-800 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-2">
-            <div className="relative h-8 w-8 overflow-hidden rounded-full grayscale">
+          <div className="flex items-center gap-3">
+            <div className="relative h-16 w-16 overflow-hidden rounded-full grayscale">
               <Image
                 src="/logo.jpg"
-                alt="Good Shepherd"
+                alt="Good Shepherd Lanka"
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">
-              Good Shepherd
+            <span className="text-base font-semibold text-gray-900 dark:text-white">
+              Good Shepherd Lanka
             </span>
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} Good Shepherd. All rights reserved.
+            © {new Date().getFullYear()} Good Shepherd Lanka. All rights
+            reserved.
           </p>
         </div>
       </div>
