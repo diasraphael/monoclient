@@ -1,4 +1,3 @@
-import { Button } from "@repo/ui/components";
 import Image from "next/image";
 
 export function Hero() {
