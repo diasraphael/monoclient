@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function Hero() {
+export function Welcome() {
   return (
     <section className="relative overflow-hidden bg-white py-16 md:py-16 lg:py-24 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

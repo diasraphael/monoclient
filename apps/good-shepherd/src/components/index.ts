@@ -1,4 +1,5 @@
-export { Hero } from "./Hero";
-export { Features } from "./Features";
+export { Welcome } from "./Welcome";
+export { AboutUs } from "./AboutUs";
+export { OurStrengths } from "./OurStrengths";
 export { CallToAction } from "./CallToAction";
 export { LandingPage } from "./LandingPage";

@@ -1,8 +1,9 @@
 import Image from "next/image";
 
+import { AboutUs } from "./AboutUs";
 import { CallToAction } from "./CallToAction";
-import { Features } from "./Features";
-import { Hero } from "./Hero";
+import { OurStrengths } from "./OurStrengths";
+import { Welcome } from "./Welcome";
 
 function Navigation() {
   return (
@@ -61,8 +62,9 @@ export function LandingPage() {
     <div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
       <Navigation />
       <main className="flex-1">
-        <Hero />
-        <Features />
+        <Welcome />
+        <AboutUs />
+        <OurStrengths />
         <CallToAction />
       </main>
       <Footer />

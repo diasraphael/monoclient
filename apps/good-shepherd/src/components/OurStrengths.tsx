@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@repo/ui/components";
 
-const features = [
+const strengths = [
   {
     title: "Discipline",
     description:
@@ -39,7 +39,7 @@ const features = [
   },
 ];
 
-export function Features() {
+export function OurStrengths() {
   return (
     <section className="bg-white py-24 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -54,22 +54,22 @@ export function Features() {
           </p>
         </div>
 
-        {/* Features Grid */}
+        {/* Strengths Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
+          {strengths.map((strength, index) => (
             <Card
               key={index}
               className="transform p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
               <CardHeader className="space-y-4 pb-4">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-100 text-3xl dark:bg-rose-900/30">
-                  {feature.icon}
+                  {strength.icon}
                 </div>
-                <CardTitle className="text-xl">{feature.title}</CardTitle>
+                <CardTitle className="text-xl">{strength.title}</CardTitle>
               </CardHeader>
               <CardContent className="pt-2">
                 <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
+                  {strength.description}
                 </p>
               </CardContent>
             </Card>
