@@ -5,7 +5,6 @@ import { useState, useRef } from "react";
 export function Video() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showControls, setShowControls] = useState(true);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -38,11 +37,7 @@ export function Video() {
           <div className="absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-r from-rose-700 to-rose-900 opacity-10 blur-3xl dark:opacity-20" />
 
           {/* Video Player */}
-          <div
-            className="group relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl"
-            onMouseEnter={() => setShowControls(true)}
-            onMouseLeave={() => setShowControls(isPlaying ? false : true)}
-          >
+          <div className="group relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl">
             <video
               ref={videoRef}
               className="aspect-video w-full"
@@ -53,6 +48,7 @@ export function Video() {
               onEnded={() => setIsPlaying(false)}
             >
               <source src="/video.mp4" type="video/mp4" />
+              <track kind="captions" label="English captions" />
               Your browser does not support the video tag.
             </video>
 
