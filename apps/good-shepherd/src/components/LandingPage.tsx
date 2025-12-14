@@ -1,5 +1,6 @@
 import { AboutUs } from "./AboutUs";
 import { BoardMembers } from "./BoardMembers";
+import { Contributions } from "./Contributions";
 import { Footer } from "./Footer";
 import { FounderDirector } from "./FounderDirector";
 import { Gallery } from "./Gallery";
@@ -19,6 +20,7 @@ export function LandingPage() {
         <VisionMission />
         <FounderDirector />
         <BoardMembers />
+        <Contributions />
         <Gallery />
         <Video />
         <OurStrengths />

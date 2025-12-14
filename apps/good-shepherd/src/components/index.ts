@@ -3,6 +3,7 @@ export { AboutUs } from "./AboutUs";
 export { VisionMission } from "./VisionMission";
 export { FounderDirector } from "./FounderDirector";
 export { BoardMembers } from "./BoardMembers";
+export { Contributions } from "./Contributions";
 export { OurStrengths } from "./OurStrengths";
 export { Gallery } from "./Gallery";
 export { Video } from "./Video";
