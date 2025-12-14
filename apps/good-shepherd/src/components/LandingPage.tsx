@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AboutUs } from "./AboutUs";
 import { CallToAction } from "./CallToAction";
 import { OurStrengths } from "./OurStrengths";
+import { VisionMission } from "./VisionMission";
 import { Welcome } from "./Welcome";
 
 function Navigation() {
@@ -64,6 +65,7 @@ export function LandingPage() {
       <main className="flex-1">
         <Welcome />
         <AboutUs />
+        <VisionMission />
         <OurStrengths />
         <CallToAction />
       </main>
