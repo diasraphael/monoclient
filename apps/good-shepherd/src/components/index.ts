@@ -3,4 +3,6 @@ export { AboutUs } from "./AboutUs";
 export { VisionMission } from "./VisionMission";
 export { OurStrengths } from "./OurStrengths";
 export { CallToAction } from "./CallToAction";
+export { Navigation } from "./Navigation";
+export { Footer } from "./Footer";
 export { LandingPage } from "./LandingPage";
