@@ -1,6 +1,7 @@
 import { AboutUs } from "./AboutUs";
 import { BoardMembers } from "./BoardMembers";
 import { Footer } from "./Footer";
+import { FounderDirector } from "./FounderDirector";
 import { Gallery } from "./Gallery";
 import { Navigation } from "./Navigation";
 import { OurStrengths } from "./OurStrengths";
@@ -16,6 +17,7 @@ export function LandingPage() {
         <Welcome />
         <AboutUs />
         <VisionMission />
+        <FounderDirector />
         <BoardMembers />
         <Gallery />
         <Video />
