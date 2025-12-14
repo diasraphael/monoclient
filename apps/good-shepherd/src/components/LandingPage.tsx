@@ -1,4 +1,5 @@
 import { AboutUs } from "./AboutUs";
+import { BoardMembers } from "./BoardMembers";
 import { Footer } from "./Footer";
 import { Gallery } from "./Gallery";
 import { Navigation } from "./Navigation";
@@ -15,6 +16,7 @@ export function LandingPage() {
         <Welcome />
         <AboutUs />
         <VisionMission />
+        <BoardMembers />
         <Gallery />
         <Video />
         <OurStrengths />

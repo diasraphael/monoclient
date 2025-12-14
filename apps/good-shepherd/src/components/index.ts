@@ -1,6 +1,7 @@
 export { Welcome } from "./Welcome";
 export { AboutUs } from "./AboutUs";
 export { VisionMission } from "./VisionMission";
+export { BoardMembers } from "./BoardMembers";
 export { OurStrengths } from "./OurStrengths";
 export { Gallery } from "./Gallery";
 export { Video } from "./Video";
