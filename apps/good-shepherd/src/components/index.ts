@@ -2,6 +2,8 @@ export { Welcome } from "./Welcome";
 export { AboutUs } from "./AboutUs";
 export { VisionMission } from "./VisionMission";
 export { OurStrengths } from "./OurStrengths";
+export { Gallery } from "./Gallery";
+export { Video } from "./Video";
 export { CallToAction } from "./CallToAction";
 export { Navigation } from "./Navigation";
 export { Footer } from "./Footer";

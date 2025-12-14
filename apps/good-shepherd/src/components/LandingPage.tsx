@@ -1,8 +1,10 @@
 import { AboutUs } from "./AboutUs";
 import { CallToAction } from "./CallToAction";
 import { Footer } from "./Footer";
+import { Gallery } from "./Gallery";
 import { Navigation } from "./Navigation";
 import { OurStrengths } from "./OurStrengths";
+import { Video } from "./Video";
 import { VisionMission } from "./VisionMission";
 import { Welcome } from "./Welcome";
 
@@ -15,6 +17,8 @@ export function LandingPage() {
         <AboutUs />
         <VisionMission />
         <OurStrengths />
+        <Gallery />
+        <Video />
         <CallToAction />
       </main>
       <Footer />
