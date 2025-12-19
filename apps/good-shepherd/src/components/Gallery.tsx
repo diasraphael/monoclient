@@ -63,14 +63,16 @@ export function Gallery() {
 
             {/* Main Image */}
             <div className="relative h-full w-full">
-              <Image
-                src={galleryImages[currentIndex].src}
-                alt={galleryImages[currentIndex].alt}
-                fill
-                className="object-cover transition-opacity duration-500"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                priority
-              />
+              {galleryImages[currentIndex] && (
+                <Image
+                  src={galleryImages[currentIndex].src}
+                  alt={galleryImages[currentIndex].alt}
+                  fill
+                  className="object-cover transition-opacity duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                  priority
+                />
+              )}
             </div>
 
             {/* Navigation Buttons */}
