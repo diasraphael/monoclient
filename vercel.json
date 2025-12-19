@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm build --filter=good-shepherd",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "npm run build:shepherd",
+  "installCommand": "npm install",
   "framework": null
 }

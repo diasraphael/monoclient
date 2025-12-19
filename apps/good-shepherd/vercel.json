@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && pnpm install --no-frozen-lockfile && pnpm build --filter=good-shepherd",
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "devCommand": "pnpm dev",
+  "buildCommand": "cd ../.. && npm install && npm run build:shepherd",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
   "outputDirectory": ".next"
 }
