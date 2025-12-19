@@ -2,8 +2,30 @@
 
 import { useState } from "react";
 
+import { getStripe } from "@/lib/stripe-client";
+
+type DonationPreset = {
+  amount: number;
+  label: string;
+  description: string;
+};
+
+const DONATION_PRESETS: DonationPreset[] = [
+  { amount: 250, label: "NOK 250", description: "Support 1 child" },
+  { amount: 500, label: "NOK 500", description: "Support 2 children" },
+  { amount: 1000, label: "NOK 1,000", description: "Support 4 children" },
+  { amount: 2500, label: "NOK 2,500", description: "Support 10 children" },
+  { amount: 5000, label: "NOK 5,000", description: "Support 20 children" },
+];
+
 export function Contributions() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [showDonateModal, setShowDonateModal] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState<number>(250);
+  const [customAmount, setCustomAmount] = useState<string>("");
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string, field: string) => {
     try {
@@ -15,8 +37,60 @@ export function Contributions() {
     }
   };
 
+  const handleDonate = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
+
+      if (isNaN(amount) || amount < 50) {
+        setError("Please enter an amount of at least NOK 50");
+        setIsLoading(false);
+        return;
+      }
+
+      // Call API to create checkout session
+      const response = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount,
+          isRecurring,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create checkout session");
+      }
+
+      // Redirect to Stripe Checkout
+      const stripe = await getStripe();
+      if (stripe && data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Stripe is not configured properly");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <section className="bg-gradient-to-b from-white to-gray-50 py-24 dark:from-gray-900 dark:to-gray-950">
+    <section
+      id="contributions"
+      className="bg-gradient-to-b from-white to-gray-50 py-24 dark:from-gray-900 dark:to-gray-950"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
@@ -57,6 +131,32 @@ export function Contributions() {
               <p className="text-xl font-medium text-gray-900 dark:text-white">
                 We hope you will lend your benevolent hands to build the dreams
                 of the new generation. Be one of our supporters.
+              </p>
+            </div>
+          </div>
+
+          {/* Donate Online Section */}
+          <div className="relative overflow-hidden rounded-3xl border-2 border-rose-800 bg-gradient-to-br from-rose-50 to-white p-8 shadow-2xl dark:border-rose-700 dark:from-rose-900/20 dark:to-gray-900 md:p-12">
+            <div className="absolute right-0 top-0 h-64 w-64 -translate-y-16 translate-x-16 rounded-full bg-gradient-to-br from-rose-700 to-rose-900 opacity-20 blur-3xl" />
+
+            <div className="relative text-center">
+              <div className="mb-6 text-6xl">💳</div>
+              <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+                Donate Online with Stripe
+              </h3>
+              <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
+                Quick, secure, and easy online donations. Support children in
+                Sri Lanka with just a few clicks.
+              </p>
+              <button
+                onClick={() => setShowDonateModal(true)}
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
+              >
+                <span className="relative z-10">Donate Now 🚀</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-800 to-rose-950 opacity-0 transition-opacity group-hover:opacity-100" />
+              </button>
+              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                Secured by Stripe • SSL Encrypted • Instant Receipt
               </p>
             </div>
           </div>
@@ -174,6 +274,185 @@ export function Contributions() {
           </div>
         </div>
       </div>
+
+      {/* Donation Modal */}
+      {showDonateModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+          onClick={() => setShowDonateModal(false)}
+          onKeyDown={e => e.key === "Escape" && setShowDonateModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="donation-modal-title"
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-gray-200 bg-white p-8 shadow-2xl dark:border-gray-800 dark:bg-gray-900"
+            onClick={e => e.stopPropagation()}
+            role="document"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowDonateModal(false)}
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-2xl text-gray-600 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+            >
+              ×
+            </button>
+
+            {/* Modal Header */}
+            <div className="mb-8 text-center">
+              <div className="mb-4 text-5xl">❤️</div>
+              <h2
+                id="donation-modal-title"
+                className="mb-2 text-3xl font-bold text-gray-900 dark:text-white"
+              >
+                Make a Donation
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Your support changes lives
+              </p>
+            </div>
+
+            {/* Donation Type Toggle */}
+            <div className="mb-8">
+              <div className="flex gap-2 rounded-xl bg-gray-100 p-1 dark:bg-gray-800">
+                <button
+                  onClick={() => setIsRecurring(false)}
+                  className={`flex-1 rounded-lg px-6 py-3 text-sm font-semibold transition-all ${
+                    !isRecurring
+                      ? "bg-white text-rose-800 shadow-md dark:bg-gray-700 dark:text-rose-400"
+                      : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                  }`}
+                >
+                  One-Time
+                </button>
+                <button
+                  onClick={() => setIsRecurring(true)}
+                  className={`flex-1 rounded-lg px-6 py-3 text-sm font-semibold transition-all ${
+                    isRecurring
+                      ? "bg-white text-rose-800 shadow-md dark:bg-gray-700 dark:text-rose-400"
+                      : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                  }`}
+                >
+                  Monthly
+                </button>
+              </div>
+            </div>
+
+            {/* Preset Amounts */}
+            <div className="mb-6">
+              <div className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Select Amount
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {DONATION_PRESETS.map(preset => (
+                  <button
+                    key={preset.amount}
+                    onClick={() => {
+                      setSelectedAmount(preset.amount);
+                      setCustomAmount("");
+                    }}
+                    className={`rounded-xl border-2 p-4 text-left transition-all ${
+                      selectedAmount === preset.amount && !customAmount
+                        ? "border-rose-800 bg-rose-50 dark:border-rose-700 dark:bg-rose-900/30"
+                        : "border-gray-200 hover:border-rose-400 dark:border-gray-700 dark:hover:border-rose-600"
+                    }`}
+                  >
+                    <div className="text-lg font-bold text-gray-900 dark:text-white">
+                      {preset.label}
+                    </div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">
+                      {preset.description}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Custom Amount */}
+            <div className="mb-8">
+              <label
+                htmlFor="custom-amount"
+                className="mb-3 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+              >
+                Or Enter Custom Amount (NOK)
+              </label>
+              <input
+                id="custom-amount"
+                type="number"
+                min="50"
+                step="10"
+                placeholder="Enter amount (min. NOK 50)"
+                value={customAmount}
+                onChange={e => {
+                  setCustomAmount(e.target.value);
+                  setSelectedAmount(0);
+                }}
+                className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-lg font-semibold text-gray-900 transition-colors focus:border-rose-800 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-rose-400"
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 rounded-xl bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                {error}
+              </div>
+            )}
+
+            {/* Summary */}
+            <div className="mb-8 rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+              <div className="mb-2 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                <span>Donation Type:</span>
+                <span className="font-semibold">
+                  {isRecurring ? "Monthly Recurring" : "One-Time"}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between border-t border-gray-200 pt-4 dark:border-gray-700">
+                <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Total:
+                </span>
+                <span className="text-3xl font-bold text-rose-800 dark:text-rose-400">
+                  NOK {customAmount || selectedAmount}
+                  {isRecurring && (
+                    <span className="text-base font-normal">/month</span>
+                  )}
+                </span>
+              </div>
+            </div>
+
+            {/* Donate Button */}
+            <button
+              onClick={handleDonate}
+              disabled={isLoading}
+              className="w-full rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  Processing...
+                </span>
+              ) : (
+                <>Proceed to Secure Checkout</>
+              )}
+            </button>
+
+            {/* Trust Badges */}
+            <div className="mt-6 flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-1">
+                <span>🔒</span>
+                <span>Secure</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span>💳</span>
+                <span>Stripe</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span>📧</span>
+                <span>Instant Receipt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
