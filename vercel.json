@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npm run build:shepherd",
-  "installCommand": "npm install",
-  "framework": null
-}

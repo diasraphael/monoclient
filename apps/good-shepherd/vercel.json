@@ -1,7 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "cd ../.. && npm install && npm run build:shepherd",
-  "installCommand": "npm install",
-  "devCommand": "npm run dev",
-  "outputDirectory": ".next"
-}
