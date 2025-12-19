@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm build --filter=good-shepherd",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": null
+}
