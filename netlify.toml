@@ -1,0 +1,17 @@
+[build]
+  base = "/"
+  command = "turbo run build --filter good-shepherd"
+  publish = "apps/good-shepherd/.next"
+
+[build.environment]
+  # Skip scanning for public keys (they're meant to be public!)
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_APP_URL,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+
+# Next.js requires Node 18+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Cache settings for faster builds
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
