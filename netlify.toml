@@ -6,12 +6,10 @@
 [build.environment]
   # Skip scanning for public keys (they're meant to be public!)
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_APP_URL,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
-
-# Next.js requires Node 18+
-[build.environment]
+  # Next.js requires Node 18+
   NODE_VERSION = "20"
 
-# Cache settings for faster builds
+# Netlify Next.js plugin
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
