@@ -69,6 +69,11 @@ jobs:
 
       - name: Build all packages
         run: pnpm build
+        env:
+          # Dummy values for build - actual values set in deployment
+          STRIPE_SECRET_KEY: sk_test_dummy_for_build_only
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_dummy_for_build_only
+          NEXT_PUBLIC_APP_URL: https://example.com
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
