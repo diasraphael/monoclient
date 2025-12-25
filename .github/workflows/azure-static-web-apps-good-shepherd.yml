@@ -7,16 +7,18 @@ on:
     paths:
       - 'monoclient/apps/good-shepherd/**'
       - 'monoclient/packages/**'
+      - '.github/workflows/azure-static-web-apps-good-shepherd.yml'  # Trigger on workflow changes
   pull_request:
     types: [opened, synchronize, reopened, closed]
     paths:
       - 'monoclient/apps/good-shepherd/**'
       - 'monoclient/packages/**'
+      - '.github/workflows/azure-static-web-apps-good-shepherd.yml'
   workflow_dispatch:  # Enables manual triggering from GitHub UI
 
 jobs:
   build_and_deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy
     steps:
