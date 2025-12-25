@@ -1,0 +1,12 @@
+# Shared Infrastructure Configuration
+# Copy this to terraform.tfvars and fill in your values
+
+subscription_id     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"  # Get from: az account show --subscription "good-shepherd" --query id -o tsv
+resource_group_name = "my-apps-rg"
+location           = "westeurope"
+environment        = "production"
+
+# Optional: Create Cosmos DB (free tier)
+create_cosmos_db = false  # Set to true if you want a shared database
+cosmos_db_name   = "my-apps-cosmosdb"
+

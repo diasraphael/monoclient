@@ -1,0 +1,12 @@
+# Good Shepherd App Configuration
+# Copy this to terraform.tfvars and fill in your values
+
+subscription_id     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"  # Get from: az account show --subscription "good-shepherd" --query id -o tsv
+resource_group_name = "my-apps-rg"  # Must match the shared resource group
+app_name           = "good-shepherd-app"
+location           = "West Europe"
+environment        = "production"
+
+# Optional: Custom domain
+custom_domain = ""  # e.g., "goodshepherdlanka.org"
+
