@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Good Shepherd app
+      - name: Build Good Shepherd app with Turborepo
         run: pnpm build:shepherd
         env:
           # Use secrets if available, otherwise use dummy values for build
@@ -49,18 +49,51 @@ jobs:
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_dummy_for_build_only' }}
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://example.com' }}
 
-      - name: Prepare deployment package
+      - name: Prepare deployment artifacts (Turborepo outputs only)
         run: |
-          # Copy standalone build
-          cp -r apps/good-shepherd/.next/standalone ./deploy-temp
-          # Copy static files
-          cp -r apps/good-shepherd/.next/static ./deploy-temp/apps/good-shepherd/.next/static
-          # Copy public files
-          cp -r apps/good-shepherd/public ./deploy-temp/apps/good-shepherd/public
-          # Copy Azure config
-          cp apps/good-shepherd/azure-staticwebapp.config.json ./deploy-temp/apps/good-shepherd/
-          # Create a clean package.json without workspace dependencies
-          echo '{"dependencies":{"next":"16.0.10","react":"19.2.1","react-dom":"19.2.1","stripe":"^20.0.0","@stripe/stripe-js":"^8.5.3"},"scripts":{"start":"node apps/good-shepherd/server.js"}}' > ./deploy-temp/package.json
+          # Create clean deployment directory with ONLY build artifacts
+          mkdir -p azure-deploy
+          
+          # Copy Turborepo build outputs (.next folder - line 14 in turbo.json)
+          cp -r apps/good-shepherd/.next azure-deploy/.next
+          
+          # Copy public assets if they exist
+          if [ -d "apps/good-shepherd/public" ]; then
+            cp -r apps/good-shepherd/public azure-deploy/public
+          fi
+          
+          # Copy Azure configuration
+          cp apps/good-shepherd/azure-staticwebapp.config.json azure-deploy/
+          
+          # Generate package.json from source, removing workspace dependencies
+          # This ensures we always have the correct versions without manual maintenance
+          node -e "
+            const pkg = require('./apps/good-shepherd/package.json');
+            const deployPkg = {
+              name: pkg.name,
+              version: pkg.version,
+              private: pkg.private,
+              scripts: {
+                start: 'next start'
+              },
+              dependencies: {}
+            };
+            // Copy only non-workspace dependencies
+            for (const [dep, version] of Object.entries(pkg.dependencies || {})) {
+              if (!version.startsWith('workspace:')) {
+                deployPkg.dependencies[dep] = version;
+              }
+            }
+            console.log(JSON.stringify(deployPkg, null, 2));
+          " > azure-deploy/package.json
+          
+          echo "✅ Deployment artifacts prepared from Turborepo outputs"
+          echo "📦 Contents: .next build, public assets, azure config, clean package.json"
+          echo ""
+          echo "📄 Generated package.json (workspace deps removed):"
+          cat azure-deploy/package.json
+          echo ""
+          ls -la azure-deploy/
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
@@ -68,10 +101,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "deploy-temp/apps/good-shepherd"
-          api_location: ""  # No API folder
-          output_location: ""  # Standalone build includes everything
-          skip_app_build: true  # We already built it above
+          app_location: "azure-deploy"  # Deploy from clean artifacts folder
+          api_location: ""  # API routes are bundled in .next
+          output_location: ""  # Everything is already in azure-deploy
+          skip_app_build: true  # Turborepo already built everything
+          skip_api_build: true  # API already built by Turborepo
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
