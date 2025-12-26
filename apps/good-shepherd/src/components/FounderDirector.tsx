@@ -6,22 +6,22 @@ export function FounderDirector() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Founder & Director
           </h2>
-          <p className="mx-auto max-w-3xl text-xl italic text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-xl italic text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             It&apos;s a journey that we must learn to savour, cherish and
             treasure.
           </p>
         </div>
 
         {/* Main Content */}
-        <div className="relative mx-auto max-w-6xl">
+        <div className="relative mx-auto max-w-6xl animate-fade-in delay-200">
           {/* Decorative background gradient */}
-          <div className="absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-r from-rose-700 to-rose-900 opacity-5 blur-3xl dark:opacity-10" />
+          <div className="absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-r from-rose-700 to-rose-900 opacity-5 blur-3xl dark:opacity-10 animate-float" />
 
           {/* Content Card */}
-          <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-900">
+          <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-900 hover-lift">
             <div className="grid items-center gap-12 lg:grid-cols-5">
               {/* Left: Founder Image */}
               <div className="lg:col-span-2">
@@ -30,7 +30,7 @@ export function FounderDirector() {
                     src="/father.jpg"
                     alt="Anton Sinnathamby - Founder"
                     fill
-                    className="object-cover"
+                    className="object-cover hover-brightness"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                   />
                   {/* Gradient overlay at bottom */}
@@ -92,7 +92,7 @@ export function FounderDirector() {
 
                   {/* Stats or Achievement Badges */}
                   <div className="mt-8 grid grid-cols-3 gap-4">
-                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800">
+                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800 hover-scale">
                       <div className="text-2xl font-bold text-rose-800 dark:text-rose-400">
                         2009
                       </div>
@@ -100,7 +100,7 @@ export function FounderDirector() {
                         Founded
                       </div>
                     </div>
-                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800">
+                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800 hover-scale">
                       <div className="text-2xl font-bold text-rose-800 dark:text-rose-400">
                         12+
                       </div>
@@ -108,7 +108,7 @@ export function FounderDirector() {
                         Years
                       </div>
                     </div>
-                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800">
+                    <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-rose-50 to-white p-4 dark:border-gray-700 dark:from-rose-900/20 dark:to-gray-800 hover-scale">
                       <div className="text-2xl font-bold text-rose-800 dark:text-rose-400">
                         #1
                       </div>

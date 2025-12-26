@@ -22,17 +22,17 @@ export function Video() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Our Story in Motion
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             Watch our journey and see the impact we&apos;re making in the lives
             of children at Good Shepherd Lanka.
           </p>
         </div>
 
         {/* Video Container */}
-        <div className="relative mx-auto max-w-5xl">
+        <div className="relative mx-auto max-w-5xl animate-scale-in delay-200">
           {/* Decorative gradient background */}
           <div className="absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-r from-rose-700 to-rose-900 opacity-10 blur-3xl dark:opacity-20" />
 
@@ -74,7 +74,7 @@ export function Video() {
 
           {/* Video Information Cards */}
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 animate-slide-up delay-300 hover-lift">
               <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-2xl dark:bg-rose-900/30">
                 🎥
               </div>
@@ -86,7 +86,7 @@ export function Video() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 animate-slide-up delay-400 hover-lift">
               <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-2xl dark:bg-rose-900/30">
                 🎓
               </div>
@@ -98,7 +98,7 @@ export function Video() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 animate-slide-up delay-400 hover-lift">
               <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-2xl dark:bg-rose-900/30">
                 ❤️
               </div>

@@ -37,10 +37,10 @@ export function BoardMembers() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Board Members
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             Group of people who jointly supervise the activities of the
             organization.
           </p>
@@ -48,10 +48,10 @@ export function BoardMembers() {
 
         {/* Board Members Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {boardMembers.map(member => (
+          {boardMembers.map((member, index) => (
             <div
               key={member.id}
-              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl dark:border-gray-800 dark:bg-gray-900"
+              className={`group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl dark:border-gray-800 dark:bg-gray-900 animate-scale-in delay-${Math.min((index + 2) * 100, 400)}`}
             >
               {/* Decorative gradient on hover */}
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-rose-700 to-rose-900 opacity-0 transition-opacity group-hover:opacity-100" />

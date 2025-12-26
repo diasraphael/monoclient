@@ -45,10 +45,10 @@ export function OurStrengths() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Why select us?
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             We aim to provide education to the children for the betterment of
             their life.
           </p>
@@ -59,7 +59,7 @@ export function OurStrengths() {
           {strengths.map((strength, index) => (
             <Card
               key={index}
-              className="transform p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className={`transform p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl animate-scale-in delay-${Math.min((index + 2) * 100, 400)}`}
             >
               <CardHeader className="space-y-4 pb-4">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-100 text-3xl dark:bg-rose-900/30">

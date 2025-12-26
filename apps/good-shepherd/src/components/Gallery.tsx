@@ -45,17 +45,17 @@ export function Gallery() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Our Gallery
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             A glimpse into our vibrant community and the moments that make Good
             Shepherd Lanka special.
           </p>
         </div>
 
         {/* Main Carousel */}
-        <div className="relative">
+        <div className="relative animate-scale-in delay-200">
           {/* Main Image Container */}
           <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-gray-100 shadow-2xl dark:bg-gray-800">
             {/* Decorative gradient */}

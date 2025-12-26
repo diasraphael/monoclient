@@ -94,10 +94,10 @@ export function Contributions() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white animate-slide-up">
             Contributions
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300 animate-slide-up delay-100">
             We are requesting your support.
           </p>
         </div>
@@ -105,7 +105,7 @@ export function Contributions() {
         {/* Main Content */}
         <div className="mx-auto max-w-5xl space-y-12">
           {/* Introduction Card */}
-          <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-lg dark:border-gray-800 dark:bg-gray-900 md:p-12">
+          <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-lg dark:border-gray-800 dark:bg-gray-900 md:p-12 animate-scale-in delay-200">
             <div className="absolute right-0 top-0 h-64 w-64 -translate-y-32 translate-x-32 rounded-full bg-gradient-to-br from-rose-700 to-rose-900 opacity-10 blur-3xl" />
 
             <div className="relative space-y-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
@@ -136,7 +136,7 @@ export function Contributions() {
           </div>
 
           {/* Donate Online Section */}
-          <div className="relative overflow-hidden rounded-3xl border-2 border-rose-800 bg-gradient-to-br from-rose-50 to-white p-8 shadow-2xl dark:border-rose-700 dark:from-rose-900/20 dark:to-gray-900 md:p-12">
+          <div className="relative overflow-hidden rounded-3xl border-2 border-rose-800 bg-gradient-to-br from-rose-50 to-white p-8 shadow-2xl dark:border-rose-700 dark:from-rose-900/20 dark:to-gray-900 md:p-12 animate-scale-in delay-300 hover-lift">
             <div className="absolute right-0 top-0 h-64 w-64 -translate-y-16 translate-x-16 rounded-full bg-gradient-to-br from-rose-700 to-rose-900 opacity-20 blur-3xl" />
 
             <div className="relative text-center">
@@ -165,7 +165,7 @@ export function Contributions() {
           {/* Impact Statement */}
           <div className="grid gap-8 md:grid-cols-2">
             {/* Need Card */}
-            <div className="group rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-8 shadow-md transition-all hover:shadow-xl dark:border-gray-800 dark:from-gray-900 dark:to-gray-800">
+            <div className="group rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-8 shadow-md transition-all hover:shadow-xl dark:border-gray-800 dark:from-gray-900 dark:to-gray-800 animate-slide-in-left delay-400 hover-lift">
               <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-100 text-3xl transition-transform group-hover:scale-110 dark:bg-rose-900/30">
                 🤝
               </div>
@@ -181,7 +181,7 @@ export function Contributions() {
             </div>
 
             {/* Impact Card */}
-            <div className="group rounded-2xl border border-rose-800 bg-gradient-to-br from-rose-700 to-rose-900 p-8 shadow-md transition-all hover:shadow-xl dark:border-rose-700">
+            <div className="group rounded-2xl border border-rose-800 bg-gradient-to-br from-rose-700 to-rose-900 p-8 shadow-md transition-all hover:shadow-xl dark:border-rose-700 animate-slide-in-right delay-400 hover-lift">
               <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-3xl backdrop-blur-sm transition-transform group-hover:scale-110">
                 ✨
               </div>
