@@ -71,10 +71,8 @@ jobs:
                 deployPkg.dependencies[dep] = version;
               }
             }
-            // Add sharp for Next.js image optimization (required for production)
-            if (!deployPkg.dependencies['sharp']) {
-              deployPkg.dependencies['sharp'] = '^0.33.5';
-            }
+            // Note: Not adding sharp to reduce deployment time
+            // Only needed if using next/image with optimization
             console.log(JSON.stringify(deployPkg, null, 2));
           " > azure-deploy/package.json
           

@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Azure Static Web Apps configuration
-  output: "standalone", // Creates optimized, self-contained build
+  // Note: Removed standalone mode for faster Azure deployments
   experimental: {
     // Optimize for Azure deployment
     serverActions: {
