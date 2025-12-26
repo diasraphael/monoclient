@@ -2,7 +2,7 @@ import { Button } from "@repo/ui/components";
 
 export function VisionMission() {
   return (
-    <section className="bg-gray-50 py-24 dark:bg-gray-950">
+    <section id="vision" className="bg-gray-50 py-24 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">

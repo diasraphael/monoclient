@@ -149,6 +149,7 @@ export function Contributions() {
                 Sri Lanka with just a few clicks.
               </p>
               <button
+                data-donate-trigger
                 onClick={() => setShowDonateModal(true)}
                 className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
               >

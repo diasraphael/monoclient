@@ -2,7 +2,10 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100 dark:border-gray-800 dark:from-gray-950 dark:to-gray-900">
+    <footer
+      id="contact"
+      className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-gray-100 dark:border-gray-800 dark:from-gray-950 dark:to-gray-900"
+    >
       {/* Main Footer Content */}
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">

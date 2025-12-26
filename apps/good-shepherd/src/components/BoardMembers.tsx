@@ -33,7 +33,7 @@ const boardMembers = [
 
 export function BoardMembers() {
   return (
-    <section className="bg-white py-24 dark:bg-gray-900">
+    <section id="team" className="bg-white py-24 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 text-center">
