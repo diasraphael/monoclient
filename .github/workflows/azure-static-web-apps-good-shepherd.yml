@@ -40,26 +40,13 @@ jobs:
           # Create clean deployment directory with ONLY build artifacts
           mkdir -p azure-deploy
           
-          # Check if standalone build exists (Next.js output: 'standalone')
-          if [ -d "apps/good-shepherd/.next/standalone" ]; then
-            echo "📦 Using Next.js standalone build"
-            # Copy standalone server
-            cp -r apps/good-shepherd/.next/standalone/* azure-deploy/
-            # Copy static files into standalone structure
-            mkdir -p azure-deploy/apps/good-shepherd/.next
-            cp -r apps/good-shepherd/.next/static azure-deploy/apps/good-shepherd/.next/static
-            # Copy public assets
-            if [ -d "apps/good-shepherd/public" ]; then
-              cp -r apps/good-shepherd/public azure-deploy/apps/good-shepherd/public
-            fi
-          else
-            echo "📦 Using standard Next.js build"
-            # Copy Turborepo build outputs (.next folder - line 14 in turbo.json)
-            cp -r apps/good-shepherd/.next azure-deploy/.next
-            # Copy public assets if they exist
-            if [ -d "apps/good-shepherd/public" ]; then
-              cp -r apps/good-shepherd/public azure-deploy/public
-            fi
+          # Azure Static Web Apps expects .next folder at app root
+          # Copy the entire .next build (works with both standalone and regular builds)
+          cp -r apps/good-shepherd/.next azure-deploy/.next
+          
+          # Copy public assets if they exist
+          if [ -d "apps/good-shepherd/public" ]; then
+            cp -r apps/good-shepherd/public azure-deploy/public
           fi
           
           # Copy Azure Static Web Apps configuration
@@ -92,7 +79,6 @@ jobs:
           " > azure-deploy/package.json
           
           echo "✅ Deployment artifacts prepared from Turborepo outputs"
-          echo "📦 Contents: .next build, public assets, azure config, clean package.json"
           echo ""
           echo "📄 Generated package.json (workspace deps removed):"
           cat azure-deploy/package.json
@@ -100,16 +86,27 @@ jobs:
           echo "📄 Azure Static Web Apps config:"
           cat azure-deploy/staticwebapp.config.json
           echo ""
+          echo "📦 azure-deploy folder structure:"
           ls -la azure-deploy/
           echo ""
-          echo "📁 Checking .next build structure:"
-          ls -la azure-deploy/.next/ || echo "⚠️ .next directory not found"
+          echo "📁 .next folder contents:"
+          ls -la azure-deploy/.next/ 2>/dev/null || echo "❌ .next directory not found!"
           echo ""
-          echo "🔍 Verifying Next.js server files:"
-          if [ -f "azure-deploy/.next/BUILD_ID" ]; then
-            echo "✅ BUILD_ID found"
+          echo "🔍 Next.js build verification:"
+          if [ -d "azure-deploy/.next" ]; then
+            echo "✅ .next directory exists"
+            if [ -f "azure-deploy/.next/BUILD_ID" ]; then
+              echo "✅ BUILD_ID found: $(cat azure-deploy/.next/BUILD_ID)"
+            fi
+            if [ -d "azure-deploy/.next/server" ]; then
+              echo "✅ Server directory exists"
+            fi
+            if [ -d "azure-deploy/.next/static" ]; then
+              echo "✅ Static directory exists"
+            fi
           else
-            echo "❌ BUILD_ID missing - build may be incomplete"
+            echo "❌ .next directory missing - deployment will fail!"
+            exit 1
           fi
 
       - name: Deploy to Azure Static Web Apps
@@ -120,6 +117,6 @@ jobs:
           action: "upload"
           app_location: "azure-deploy"  # Deploy from clean artifacts folder
           api_location: ""  # API routes are bundled in .next
-          output_location: ""  # Everything is already in azure-deploy
+          output_location: ".next"  # Tell Azure where the Next.js build is
           skip_app_build: true  # Turborepo already built everything
           skip_api_build: true  # API already built by Turborepo
