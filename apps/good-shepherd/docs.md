@@ -20,3 +20,46 @@ Add the Token to GitHub Secrets
 - Name: AZURE_STATIC_WEB_APPS_API_TOKEN
 - Value: Paste the token that was just retrieved (copy it from the terminal output above - it starts with 7626c9f...)
 - Click Add secret
+
+### Step-by-Step: Connect Domeneshop Domain to Vercel
+
+- Step 1: Add Domain in Vercel
+
+1. Go to your Vercel dashboard: vercel.com/dashboard
+2. Click on your good-shepherd project
+3. Go to Settings → Domains
+4. Enter your domain name (e.g., faithbaptistoslo.no or www.faithbaptistoslo.no)
+5. Click Add
+6. Vercel will show you the DNS records you need to configure.
+
+- Step 2: Choose Your Setup
+
+1. Root Domain (e.g., faithbaptistoslo.no)
+
+```
+Type: A
+Name: @
+Value: 76.76.21.21
+```
+
+2. Subdomain (e.g., www.faithbaptistoslo.no)
+
+```
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com
+```
+
+Recommendation: Use both (root domain + www subdomain) so visitors can access your site either way.
+
+- Step 3: Configure DNS in Domeneshop
+
+1. Log in to Domeneshop:
+2. Go to domeneshop.no
+3. Click Logg inn
+4. Log in with your credentials
+5. Go to DNS Settings:
+6. Click Domener (Domains)
+7. Find your domain
+8. Click Endre (Edit) → DNS
+9. Add DNS Records:
