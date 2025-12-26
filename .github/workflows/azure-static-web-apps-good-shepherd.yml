@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - 'monoclient/apps/good-shepherd/**'
-      - 'monoclient/packages/**'
+      - 'apps/good-shepherd/**'
+      - 'packages/**'
       - '.github/workflows/azure-static-web-apps-good-shepherd.yml'  # Trigger on workflow changes
   pull_request:
     types: [opened, synchronize, reopened, closed]
     paths:
-      - 'monoclient/apps/good-shepherd/**'
-      - 'monoclient/packages/**'
+      - 'apps/good-shepherd/**'
+      - 'packages/**'
       - '.github/workflows/azure-static-web-apps-good-shepherd.yml'
   workflow_dispatch:  # Enables manual triggering from GitHub UI
 
@@ -38,11 +38,9 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        working-directory: ./monoclient
         run: pnpm install
 
       - name: Build Good Shepherd app
-        working-directory: ./monoclient
         run: pnpm build:shepherd
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -55,7 +53,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/monoclient/apps/good-shepherd"
+          app_location: "apps/good-shepherd"
           api_location: ""  # No API folder
           output_location: ".next"
           skip_app_build: true  # We already built it above
