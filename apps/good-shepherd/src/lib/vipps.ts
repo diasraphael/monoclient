@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - SDK types can cause build issues
 import { Client } from "@vippsmobilepay/sdk";
 
 // Vipps credentials validation
@@ -24,7 +26,9 @@ if (typeof window === "undefined" && process.env.NODE_ENV !== "production") {
 
 // Create Vipps SDK client instance
 // This client has properties: checkout, recurring.agreement, recurring.charge, etc.
-const vippsClient = Client({
+// Note: Using 'any' type to avoid TypeScript stack overflow with SDK's complex types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const vippsConfig: any = {
   clientId: process.env.VIPPS_CLIENT_ID || "dummy_client_id_for_build",
   clientSecret:
     process.env.VIPPS_CLIENT_SECRET || "dummy_client_secret_for_build",
@@ -35,12 +39,18 @@ const vippsClient = Client({
   retryRequests: true,
   systemName: "Good Shepherd Lanka",
   systemVersion: "1.0.0",
-});
+};
 
-// Export the client APIs
-export const authAPI = vippsClient.auth;
-export const checkoutAPI = vippsClient.checkout;
-export const recurringAPI = vippsClient.recurring;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const vippsClient: any = Client(vippsConfig);
+
+// Export the client APIs (using any to avoid TS stack overflow with SDK types)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const authAPI: any = vippsClient.auth;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const checkoutAPI: any = vippsClient.checkout;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const recurringAPI: any = vippsClient.recurring;
 
 // Donation presets (same as Stripe for consistency)
 export const VIPPS_DONATION_PRESETS = {
