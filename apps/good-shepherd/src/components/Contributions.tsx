@@ -242,39 +242,70 @@ export function Contributions() {
             </div>
           </div>
 
-          {/* Impact Statement */}
-          <div className="grid gap-8 md:grid-cols-2">
-            {/* Need Card */}
-            <div className="group rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-8 shadow-md transition-all hover:shadow-xl dark:border-gray-800 dark:from-gray-900 dark:to-gray-800 animate-slide-in-left delay-400 hover-lift">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-100 text-3xl transition-transform group-hover:scale-110 dark:bg-rose-900/30">
-                🤝
-              </div>
-              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-                The Need
-              </h3>
-              <p className="leading-relaxed text-gray-700 dark:text-gray-300">
-                Due to poverty these families cannot afford to send their
-                children to a school of a good standard. We are close with the
-                parents of these unprivileged children to provide a better
-                future for the children.
-              </p>
-            </div>
+          {/* Vipps QR Code Section */}
+          <div className="relative overflow-hidden rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50 to-white p-8 shadow-xl dark:border-orange-800 dark:from-gray-900 dark:to-gray-800 md:p-12 animate-scale-in delay-600">
+            <div className="absolute right-0 bottom-0 h-64 w-64 translate-x-32 translate-y-32 rounded-full bg-gradient-to-br from-orange-500 to-orange-700 opacity-10 blur-3xl" />
 
-            {/* Impact Card */}
-            <div className="group rounded-2xl border border-rose-800 bg-gradient-to-br from-rose-700 to-rose-900 p-8 shadow-md transition-all hover:shadow-xl dark:border-rose-700 animate-slide-in-right delay-400 hover-lift">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-3xl backdrop-blur-sm transition-transform group-hover:scale-110">
-                ✨
+            <div className="relative">
+              <div className="mb-8 text-center">
+                <div className="mb-4 flex justify-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-100 text-3xl dark:bg-orange-900/30">
+                    🇳🇴
+                  </div>
+                </div>
+                <h3 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+                  Pay with Vipps
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Scan the QR code with your Vipps app
+                </p>
               </div>
-              <h3 className="mb-4 text-2xl font-bold text-white">
-                Your Impact
-              </h3>
-              <p className="mb-4 leading-relaxed text-rose-50">
-                Join hands to uplift a generation. A kid requires{" "}
-                <span className="text-2xl font-bold text-white">NOK 250</span>{" "}
-                to bright up his/her future.
-              </p>
-              <div className="inline-flex rounded-full bg-white/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-                Make a difference today
+
+              <div className="mx-auto max-w-sm">
+                <div className="rounded-2xl border-4 border-orange-500 bg-white p-4 shadow-lg dark:border-orange-600 dark:bg-gray-800">
+                  <img
+                    src="/vipps.png"
+                    alt="Vipps QR Code - Scan to donate"
+                    className="h-auto w-full rounded-lg"
+                    onError={e => {
+                      // Fallback if image doesn't exist
+                      e.currentTarget.src =
+                        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%236b7280'%3EAdd vipps-qr.png%3C/text%3E%3C/svg%3E";
+                    }}
+                  />
+                </div>
+
+                <div className="mt-6 text-center">
+                  <div className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Or use Vipps number:
+                  </div>
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="font-mono text-2xl font-bold text-orange-600 dark:text-orange-400">
+                      #37221
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard("37221", "vipps-qr")}
+                      className="rounded-lg bg-orange-100 px-3 py-2 text-sm font-medium text-orange-700 transition-colors hover:bg-orange-600 hover:text-white dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-600 dark:hover:text-white"
+                    >
+                      {copiedField === "vipps-qr" ? "✓ Copied" : "Copy"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-6 border-t border-orange-200 pt-6 text-sm text-gray-600 dark:border-orange-800 dark:text-gray-400">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">📱</span>
+                  <span>Fast & Easy</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🔒</span>
+                  <span>Secure</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">⚡</span>
+                  <span>Instant</span>
+                </div>
               </div>
             </div>
           </div>
@@ -323,6 +354,24 @@ export function Contributions() {
                       className="rounded-lg bg-rose-100 px-3 py-2 text-sm font-medium text-rose-800 transition-colors hover:bg-rose-800 hover:text-white dark:bg-rose-900/30 dark:text-rose-400 dark:hover:bg-rose-800 dark:hover:text-white"
                     >
                       {copiedField === "iban" ? "✓ Copied" : "Copy"}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Vipps Number */}
+                <div className="group rounded-xl border border-gray-200 bg-gray-50 p-6 transition-all hover:border-rose-800 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-rose-400">
+                  <div className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Vipps Number
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="font-mono text-xl font-bold text-gray-900 dark:text-white">
+                      #37221
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard("37221", "vipps")}
+                      className="rounded-lg bg-rose-100 px-3 py-2 text-sm font-medium text-rose-800 transition-colors hover:bg-rose-800 hover:text-white dark:bg-rose-900/30 dark:text-rose-400 dark:hover:bg-rose-800 dark:hover:text-white"
+                    >
+                      {copiedField === "vipps" ? "✓ Copied" : "Copy"}
                     </button>
                   </div>
                 </div>
