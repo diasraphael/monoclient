@@ -46,8 +46,8 @@ export function Contributions() {
     try {
       const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
 
-      if (isNaN(amount) || amount < 50) {
-        setError("Please enter an amount of at least NOK 50");
+      if (isNaN(amount) || amount < 10) {
+        setError("Please enter an amount of at least NOK 10");
         setLoadingMethod(null);
         return;
       }
@@ -95,8 +95,8 @@ export function Contributions() {
     try {
       const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
 
-      if (isNaN(amount) || amount < 50) {
-        setError("Please enter an amount of at least NOK 50");
+      if (isNaN(amount) || amount < 10) {
+        setError("Please enter an amount of at least NOK 10");
         setLoadingMethod(null);
         return;
       }
@@ -140,8 +140,8 @@ export function Contributions() {
     try {
       const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
 
-      if (isNaN(amount) || amount < 50) {
-        setError("Please enter an amount of at least NOK 50");
+      if (isNaN(amount) || amount < 10) {
+        setError("Please enter an amount of at least NOK 10");
         setLoadingMethod(null);
         return;
       }
@@ -460,9 +460,9 @@ export function Contributions() {
               <input
                 id="custom-amount"
                 type="number"
-                min="50"
+                min="10"
                 step="10"
-                placeholder="Enter amount (min. NOK 50)"
+                placeholder="Enter amount (min. NOK 10)"
                 value={customAmount}
                 onChange={e => {
                   setCustomAmount(e.target.value);

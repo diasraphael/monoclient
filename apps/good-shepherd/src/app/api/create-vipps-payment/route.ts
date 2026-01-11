@@ -9,9 +9,9 @@ export async function POST(req: Request) {
     const { amount } = await req.json();
 
     // Validate amount
-    if (!amount || isNaN(amount) || amount < 50) {
+    if (!amount || isNaN(amount) || amount < 10) {
       return NextResponse.json(
-        { error: "Amount must be at least NOK 50" },
+        { error: "Amount must be at least NOK 10" },
         { status: 400 }
       );
     }

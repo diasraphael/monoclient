@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     const { amount, isRecurring } = body;
 
     // Validate amount
-    if (!amount || amount < 50) {
+    if (!amount || amount < 10) {
       return NextResponse.json(
-        { error: "Amount must be at least NOK 50" },
+        { error: "Amount must be at least NOK 10" },
         { status: 400 }
       );
     }
