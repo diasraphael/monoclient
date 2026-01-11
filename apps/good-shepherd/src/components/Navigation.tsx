@@ -9,10 +9,7 @@ export function Navigation() {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About Us", href: "#about" },
-    { name: "Vision & Mission", href: "#vision" },
-    { name: "Team", href: "#team" },
     { name: "Donate", href: "#contributions" },
-    { name: "Gallery", href: "#gallery" },
     { name: "Contact", href: "#contact" },
   ];
 

@@ -24,7 +24,9 @@ export function Contributions() {
   const [selectedAmount, setSelectedAmount] = useState<number>(250);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [isRecurring, setIsRecurring] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMethod, setLoadingMethod] = useState<"stripe" | "vipps" | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string, field: string) => {
@@ -38,7 +40,7 @@ export function Contributions() {
   };
 
   const handleDonate = async () => {
-    setIsLoading(true);
+    setLoadingMethod("stripe");
     setError(null);
 
     try {
@@ -46,7 +48,7 @@ export function Contributions() {
 
       if (isNaN(amount) || amount < 50) {
         setError("Please enter an amount of at least NOK 50");
-        setIsLoading(false);
+        setLoadingMethod(null);
         return;
       }
 
@@ -82,7 +84,97 @@ export function Contributions() {
           ? err.message
           : "Something went wrong. Please try again."
       );
-      setIsLoading(false);
+      setLoadingMethod(null);
+    }
+  };
+
+  const handleVippsDonate = async () => {
+    setLoadingMethod("vipps");
+    setError(null);
+
+    try {
+      const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
+
+      if (isNaN(amount) || amount < 50) {
+        setError("Please enter an amount of at least NOK 50");
+        setLoadingMethod(null);
+        return;
+      }
+
+      // Call Vipps API for one-time payment
+      const response = await fetch("/api/create-vipps-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create Vipps payment");
+      }
+
+      // Redirect to Vipps
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Vipps payment URL not received");
+      }
+    } catch (err) {
+      console.error("Vipps Error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong with Vipps. Please try again."
+      );
+      setLoadingMethod(null);
+    }
+  };
+
+  const handleVippsRecurring = async () => {
+    setLoadingMethod("vipps");
+    setError(null);
+
+    try {
+      const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
+
+      if (isNaN(amount) || amount < 50) {
+        setError("Please enter an amount of at least NOK 50");
+        setLoadingMethod(null);
+        return;
+      }
+
+      // Call Vipps Recurring API (uses AvtaleGiro)
+      const response = await fetch("/api/create-vipps-recurring", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create recurring donation");
+      }
+
+      // Redirect to Vipps to approve monthly agreement
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Vipps agreement URL not received");
+      }
+    } catch (err) {
+      console.error("Vipps Recurring Error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+      setLoadingMethod(null);
     }
   };
 
@@ -132,33 +224,21 @@ export function Contributions() {
                 We hope you will lend your benevolent hands to build the dreams
                 of the new generation. Be one of our supporters.
               </p>
-            </div>
-          </div>
 
-          {/* Donate Online Section */}
-          <div className="relative overflow-hidden rounded-3xl border-2 border-rose-800 bg-gradient-to-br from-rose-50 to-white p-8 shadow-2xl dark:border-rose-700 dark:from-rose-900/20 dark:to-gray-900 md:p-12 animate-scale-in delay-300 hover-lift">
-            <div className="absolute right-0 top-0 h-64 w-64 -translate-y-16 translate-x-16 rounded-full bg-gradient-to-br from-rose-700 to-rose-900 opacity-20 blur-3xl" />
-
-            <div className="relative text-center">
-              <div className="mb-6 text-6xl">💳</div>
-              <h3 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
-                Donate Online with Stripe
-              </h3>
-              <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
-                Quick, secure, and easy online donations. Support children in
-                Sri Lanka with just a few clicks.
-              </p>
-              <button
-                data-donate-trigger
-                onClick={() => setShowDonateModal(true)}
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
-              >
-                <span className="relative z-10">Donate Now 🚀</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-800 to-rose-950 opacity-0 transition-opacity group-hover:opacity-100" />
-              </button>
-              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                Secured by Stripe • SSL Encrypted • Instant Receipt
-              </p>
+              {/* Donate Now Button */}
+              <div className="mt-8 text-center">
+                <button
+                  data-donate-trigger
+                  onClick={() => setShowDonateModal(true)}
+                  className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
+                >
+                  <span className="relative z-10">Donate Now 🚀</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-800 to-rose-950 opacity-0 transition-opacity group-hover:opacity-100" />
+                </button>
+                <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                  💳 Vipps & Stripe • 🔒 Secure • 📧 Instant Receipt
+                </p>
+              </div>
             </div>
           </div>
 
@@ -420,27 +500,114 @@ export function Contributions() {
               </div>
             </div>
 
-            {/* Donate Button */}
-            <button
-              onClick={handleDonate}
-              disabled={isLoading}
-              className="w-full rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Processing...
-                </span>
+            {/* Payment Method Buttons */}
+            <div className="space-y-4">
+              {isRecurring ? (
+                // MONTHLY DONATIONS - Show Vipps Recurring (uses AvtaleGiro)
+                <>
+                  <button
+                    onClick={handleVippsRecurring}
+                    disabled={loadingMethod !== null}
+                    className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {loadingMethod === "vipps" ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Processing...
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        🇳🇴 Set Up Monthly with Vipps
+                      </span>
+                    )}
+                  </button>
+
+                  <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+                    Uses AvtaleGiro • Secure automatic monthly payments •
+                    Trusted by Norwegians
+                  </div>
+
+                  {/* Divider */}
+                  <div className="relative my-4">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="bg-white px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                        or use Stripe
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleDonate}
+                    disabled={loadingMethod !== null}
+                    className="w-full rounded-xl border-2 border-rose-700 bg-white px-8 py-4 text-lg font-bold text-rose-700 shadow-lg transition-all hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-rose-600 dark:bg-gray-900 dark:text-rose-400 dark:hover:bg-gray-800"
+                  >
+                    {loadingMethod === "stripe"
+                      ? "Processing..."
+                      : "💳 Monthly with Card (Stripe)"}
+                  </button>
+                </>
               ) : (
-                <>Proceed to Secure Checkout</>
+                // ONE-TIME DONATIONS - Show both Vipps and Stripe
+                <>
+                  <button
+                    onClick={handleVippsDonate}
+                    disabled={loadingMethod !== null}
+                    className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {loadingMethod === "vipps" ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Processing...
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        🇳🇴 Pay with Vipps
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Divider */}
+                  <div className="relative my-4">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="bg-white px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                        or pay with card
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleDonate}
+                    disabled={loadingMethod !== null}
+                    className="w-full rounded-xl bg-gradient-to-r from-rose-700 to-rose-900 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {loadingMethod === "stripe" ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Processing...
+                      </span>
+                    ) : (
+                      <>💳 Pay with Card (Stripe)</>
+                    )}
+                  </button>
+                </>
               )}
-            </button>
+            </div>
 
             {/* Trust Badges */}
-            <div className="mt-6 flex items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <span>🔒</span>
                 <span>Secure</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span>🇳🇴</span>
+                <span>Vipps</span>
               </div>
               <div className="flex items-center gap-1">
                 <span>💳</span>
