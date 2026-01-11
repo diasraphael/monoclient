@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
-import { authAPI, recurringAPI } from "@/lib/vipps";
 import crypto from "crypto";
+
+import { NextResponse } from "next/server";
+
+import { authAPI, recurringAPI } from "@/lib/vipps";
 
 export async function POST(req: Request) {
   try {
@@ -75,13 +77,19 @@ export async function POST(req: Request) {
       url: agreement.vippsConfirmationUrl,
       agreementId: agreement.agreementId,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Vipps recurring error:", error);
 
     return NextResponse.json(
       {
-        error: error.message || "Failed to create recurring donation",
-        details: error.response?.data || error.toString(),
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create recurring donation",
+        details:
+          error && typeof error === "object" && "response" in error
+            ? (error as { response?: { data?: unknown } }).response?.data
+            : String(error),
       },
       { status: 500 }
     );

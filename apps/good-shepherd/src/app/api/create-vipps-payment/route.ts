@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
-import { checkoutAPI } from "@/lib/vipps";
 import crypto from "crypto";
+
+import { NextResponse } from "next/server";
+
+import { checkoutAPI } from "@/lib/vipps";
 
 export async function POST(req: Request) {
   try {
@@ -62,13 +64,19 @@ export async function POST(req: Request) {
       url: response.data.checkoutFrontendUrl,
       reference,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Vipps payment error:", error);
 
     return NextResponse.json(
       {
-        error: error.message || "Failed to create Vipps payment",
-        details: error.response?.data || error.toString(),
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create Vipps payment",
+        details:
+          error && typeof error === "object" && "response" in error
+            ? (error as { response?: { data?: unknown } }).response?.data
+            : String(error),
       },
       { status: 500 }
     );
