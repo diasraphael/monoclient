@@ -2,10 +2,5 @@
   "buildCommand": "cd ../.. && pnpm build:shepherd",
   "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install",
-  "framework": "nextjs",
-  "env": {
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
-    "NEXT_PUBLIC_APP_URL": "@app_url"
-  }
+  "framework": "nextjs"
 }
